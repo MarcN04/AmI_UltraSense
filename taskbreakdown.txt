@@ -1,0 +1,11 @@
+Taskbreakdown:
+
+- create own FeatureDetecter (use MeanBasedFD)
+	- modify function checkForFeatures
+	- modify function processFeatureValue
+
+- create own notifyFeatureDetected-Method in FeatureDetected
+- create own/or modify UnrefinedFeature (not many changes)
+
+- create own FeatureExtractor 
+- create own Feature
