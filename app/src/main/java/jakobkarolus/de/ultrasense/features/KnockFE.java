@@ -11,6 +11,9 @@ import java.util.List;
 public class KnockFE extends FeatureExtractor{
 
 
+    public Feature onPeakFeatureDetected(UnrefinedFeature uF){
+        return fitKnock(uF);
+    }
     /**
      * creates a new GaussianFE with the given id.<br>
      * The id used to discern different FEs when passing their feature to the FeatureProcessor.
