@@ -13,4 +13,5 @@ public enum Gesture {
     SWIPE,
     KNOCK,
     PULSE;
+    Nothing;
 }
