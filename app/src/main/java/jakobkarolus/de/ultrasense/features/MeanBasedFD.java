@@ -95,10 +95,10 @@ public class MeanBasedFD extends FeatureDetector{
 
             increaseTime();
             double[] values = AlgoHelper.fftMagnitude(buffer, win, windowAmp);//speichern ergibt
-            double[] valueForTimeStep = meanExtraction(values, carrierIdx, halfCarrierWidth);
+            //double[] valueForTimeStep = meanExtraction(values, carrierIdx, halfCarrierWidth);
 
-            processFeatureValue(getCurrentHighFeature(), valueForTimeStep[0], true);
-            processFeatureValue(getCurrentLowFeature(), valueForTimeStep[1], false);
+         //   processFeatureValue(getCurrentHighFeature(), valueForTimeStep[0], true);
+         //   processFeatureValue(getCurrentLowFeature(), valueForTimeStep[1], false);
             //außerhalb Schleife
         }
 
@@ -160,9 +160,9 @@ public class MeanBasedFD extends FeatureDetector{
         }
     }
 
-    private double[] meanExtraction(double[] values, double carrierIdx, int halfCarrierWidth) {
+/*    private double[] meanExtraction(double[] values, double carrierIdx, int halfCarrierWidth) {
         double[] means = new double[2];
-/*
+
         //high doppler
         double meanWeightsHigh = 0.0;
         double meanHigh = 0.0;
@@ -200,6 +200,6 @@ public class MeanBasedFD extends FeatureDetector{
         }
 
         return means;
-*/
     }
+*/
 }

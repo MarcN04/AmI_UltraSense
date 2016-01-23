@@ -27,6 +27,7 @@ public abstract class FeatureDetector {
      */
     private UnrefinedFeature currentHighFeature;
     private UnrefinedFeature currentLowFeature;
+    private UnrefinedFeature currentPeakFeature;
 
 
     /**
@@ -75,6 +76,17 @@ public abstract class FeatureDetector {
         }
 
         this.currentLowFeature = new UnrefinedFeature(this.timeIncreasePerStep);
+    }
+
+    public void notifyFeatureDetectedPeak(){
+        //no need to change, as only our FE will be registered
+        for(FeatureExtractor fe : this.featExtractors) {
+            Feature f = fe.onPeakFeatureDetected(new UnrefinedFeature(currentPeakFeature));
+            if(f != null)
+                featureProcessor.processFeature(f);
+        }
+        //Zahra when are the high/lowFeatures set??
+        this.currentPeakFeature = new UnrefinedFeature(this.timeIncreasePerStep);
     }
 
         public void registerFeatureExtractor(FeatureExtractor featureExtractor){

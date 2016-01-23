@@ -16,6 +16,7 @@ public class UnrefinedFeature {
     private double timeIncreasePerStep;
 
     //per time-step list of extracted frequency values
+    private List<Double> unrefinedFeature;
 
     private double startTime;
     private double endTime;

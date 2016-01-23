@@ -10,5 +10,7 @@ public enum Gesture {
     DOWN_UP,
     DOWN,
     UP,
-    SWIPE;
+    SWIPE,
+    KNOCK,
+    PULSE;
 }
