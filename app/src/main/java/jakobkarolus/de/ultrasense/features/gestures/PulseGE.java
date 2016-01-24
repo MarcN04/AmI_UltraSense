@@ -16,7 +16,7 @@ import jakobkarolus.de.ultrasense.features.Feature;
  * <br><br>
  * Created by Jakob on 28.07.2015.
  */
-public abstract class OneFeatureGE implements GestureExtractor{
+public class PulseGE implements GestureExtractor{
 
     private final static String LENGTH_MIN = "LengthMin";
     private final static String LENGTH_MAX = "LengthMax";
@@ -52,16 +52,26 @@ public abstract class OneFeatureGE implements GestureExtractor{
         ListIterator<Feature> iter = features.listIterator();
         while(iter.hasNext()){
             Feature f = iter.next();
-            if(f.getLength() >= featureLengthMinThr && f.getLength() <= featureLengthMaxThr) {
-                if (f.getIntegral() >= featureWeightMinThr  && f.getIntegral() <= featureWeightMaxThr) {
-                    gestures.add(getSpecificGesture());
-                    iter.remove();
-                }
-            }
+            //octave-logic
+            // getSpecificGesture() when is feature
         }
         return gestures;
     }
 
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public boolean doSanityCalibrationCheck(List<Feature> features) {
+        return false;
+    }
+
+    @Override
+    public Gesture getSpecificGesture() {
+        return Gesture.PULSE;
+    }
 
     @Override
     public CalibrationState calibrate(List<Feature> features) {

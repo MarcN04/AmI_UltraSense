@@ -24,7 +24,7 @@ public class DummyFeatureProcessor extends FeatureProcessor{
         Collections.sort(getFeatures(), new Comparator<Feature>() {
             @Override
             public int compare(Feature lhs, Feature rhs) {
-                if (lhs.getTime() > rhs.getTime())
+                if (lhs.getMax() > rhs.getMax())
                     return 1;
                 else
                     return -1;

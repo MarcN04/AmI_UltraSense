@@ -100,10 +100,10 @@ public class WorkdeskPresenceAE extends ActivityExtractor{
 
 
     private boolean userIsApproaching(Feature f) {
-        return f.getWeight() >= WEIGHT_MIN_APPROACH && f.getWeight() <= WEIGHT_MAX_APPROACH && f.getLength() >= LENGTH_MIN_APPROACH && f.getLength() <= LENGTH_MAX_APPROACH;
+        return f.getIntegral() >= WEIGHT_MIN_APPROACH && f.getIntegral() <= WEIGHT_MAX_APPROACH && f.getLength() >= LENGTH_MIN_APPROACH && f.getLength() <= LENGTH_MAX_APPROACH;
     }
 
     private boolean userIsWithdrawing(Feature f) {
-        return f.getWeight() >= WEIGHT_MIN_WITHDRAW && f.getWeight() <= WEIGHT_MAX_WITHDRAW && f.getLength() >= LENGTH_MIN_WITHDRAW && f.getLength() <= LENGTH_MAX_WITHDRAW;
+        return f.getIntegral() >= WEIGHT_MIN_WITHDRAW && f.getIntegral() <= WEIGHT_MAX_WITHDRAW && f.getLength() >= LENGTH_MIN_WITHDRAW && f.getLength() <= LENGTH_MAX_WITHDRAW;
     }
 }

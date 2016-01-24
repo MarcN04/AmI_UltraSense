@@ -30,7 +30,7 @@ public abstract class Feature {
      *
      * @return the time of this feature
      */
-    public abstract double getTime();
+    public abstract double getMax();
 
     /**
      * Weight is defined as amplitude/impact of the feature. This usually increase with velocity.<br>
@@ -38,7 +38,7 @@ public abstract class Feature {
      *
      * @return the weight of this feature
      */
-    public abstract double getWeight();
+    public abstract double getIntegral();
 
     /**
      * the id is used to discern the features of different FeatureExtractors during feature processing

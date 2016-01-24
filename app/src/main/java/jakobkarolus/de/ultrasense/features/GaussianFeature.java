@@ -25,12 +25,12 @@ public class GaussianFeature extends Feature{
     }
 
     @Override
-    public double getTime() {
+    public double getMax() {
         return mu;
     }
 
     @Override
-    public double getWeight() {
+    public double getIntegral() {
         return weight;
     }
 

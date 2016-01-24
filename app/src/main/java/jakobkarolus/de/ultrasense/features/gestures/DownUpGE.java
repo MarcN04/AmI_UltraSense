@@ -88,14 +88,14 @@ public class DownUpGE extends TwoFeatureGE {
         if(features.size() == 1) {
             //the first feature has to be a down feature
             Feature f = features.get(0);
-            if (f.getWeight() >= 0.0)
+            if (f.getIntegral() >= 0.0)
                 return true;
         }
 
         if(features.size() == 2){
             Feature f1 = features.get(0);
             Feature f2 = features.get(1);
-            if (f1.getWeight() >= 0.0 && f2.getWeight() <= 0.0)
+            if (f1.getIntegral() >= 0.0 && f2.getIntegral() <= 0.0)
                 return true;
         }
 

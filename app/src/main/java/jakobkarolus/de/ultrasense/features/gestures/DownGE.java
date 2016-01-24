@@ -38,7 +38,7 @@ public class DownGE extends OneFeatureGE {
             return false;
 
         Feature f = features.get(0);
-        if (f.getWeight() <= 0.0)
+        if (f.getIntegral() <= 0.0)
             return false;
 
         return true;

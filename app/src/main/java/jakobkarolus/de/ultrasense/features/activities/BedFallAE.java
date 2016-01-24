@@ -86,7 +86,7 @@ public class BedFallAE extends ActivityExtractor {
         //make sure the status is updated for the other detection parts to work correctly
         if(getCurrentContext() == BED_POTENTIAL_FALL){
             //we got a new feature, check if is at least 1 second after the first potential fall
-            if((f.getTime() - potentialFallTime) >= POTENTIAL_FALL_THRESHOLD_TIME)
+            if((f.getMax() - potentialFallTime) >= POTENTIAL_FALL_THRESHOLD_TIME)
                 changeContext(BED_PRESENT, "User present. No fall!");
         }
 
@@ -107,7 +107,7 @@ public class BedFallAE extends ActivityExtractor {
                 //gettings upright and falling lighter is similar
                 if(potentialFallDetected(f)){
                     changeContext(BED_POTENTIAL_FALL, "Potential fall detected. Waiting for features.");
-                    potentialFallTime = f.getTime();
+                    potentialFallTime = f.getMax();
                     //we need at least one feature on the stack -> dont consume this one
                     return false;
                 }
@@ -119,20 +119,20 @@ public class BedFallAE extends ActivityExtractor {
     }
 
     private boolean potentialFallDetected(Feature f) {
-        return f.getWeight() > WEIGHT_MIN_POTENTIAL_FALL && f.getWeight() < WEIGHT_MAX_POTENTIAL_FALL && f.getLength() > LENGTH_MIN_POTENTIAL_FALL && f.getLength() < LENGTH_MAX_POTENTIAL_FALL;
+        return f.getIntegral() > WEIGHT_MIN_POTENTIAL_FALL && f.getIntegral() < WEIGHT_MAX_POTENTIAL_FALL && f.getLength() > LENGTH_MIN_POTENTIAL_FALL && f.getLength() < LENGTH_MAX_POTENTIAL_FALL;
     }
 
     private boolean userIsApproaching(Feature f) {
-        return f.getWeight() > WEIGHT_MIN_APPROACH && f.getWeight() < WEIGHT_MAX_APPROACH && f.getLength() > LENGTH_MIN_APPROACH && f.getLength() < LENGTH_MAX_APPROACH;
+        return f.getIntegral() > WEIGHT_MIN_APPROACH && f.getIntegral() < WEIGHT_MAX_APPROACH && f.getLength() > LENGTH_MIN_APPROACH && f.getLength() < LENGTH_MAX_APPROACH;
 
     }
 
     private boolean userHasFallen(Feature f) {
-        return f.getWeight() >= WEIGHT_MIN_FALL && f.getWeight() <= WEIGHT_MAX_FALL && f.getLength() >= LENGTH_MIN_FALL && f.getLength() <= LENGTH_MAX_FALL;
+        return f.getIntegral() >= WEIGHT_MIN_FALL && f.getIntegral() <= WEIGHT_MAX_FALL && f.getLength() >= LENGTH_MIN_FALL && f.getLength() <= LENGTH_MAX_FALL;
     }
 
     private boolean userIsWithdrawing(Feature f) {
-        return f.getWeight() > WEIGHT_MIN_WITHDRAW && f.getWeight() < WEIGHT_MAX_WITHDRAW && f.getLength() > LENGTH_MIN_WITHDRAW && f.getLength() < LENGTH_MAX_WITHDRAW;
+        return f.getIntegral() > WEIGHT_MIN_WITHDRAW && f.getIntegral() < WEIGHT_MAX_WITHDRAW && f.getLength() > LENGTH_MIN_WITHDRAW && f.getLength() < LENGTH_MAX_WITHDRAW;
 
     }
 
@@ -208,8 +208,8 @@ public class BedFallAE extends ActivityExtractor {
 
     private boolean userIsAwake(List<Feature> features) {
         for(Feature f : features){
-            if(f.getWeight() > WEIGHT_MIN_BED_AWAKE_HIGH && f.getWeight() < WEIGHT_MAX_BED_AWAKE_HIGH && f.getLength() > LENGTH_MIN_BED_AWAKE_HIGH && f.getLength() < LENGTH_MAX_BED_AWAKE_HIGH ||
-                    f.getWeight() > WEIGHT_MIN_BED_AWAKE_LOW && f.getWeight() < WEIGHT_MAX_BED_AWAKE_LOW && f.getLength() > LENGTH_MIN_BED_AWAKE_LOW && f.getLength() < LENGTH_MAX_BED_AWAKE_LOW)
+            if(f.getIntegral() > WEIGHT_MIN_BED_AWAKE_HIGH && f.getIntegral() < WEIGHT_MAX_BED_AWAKE_HIGH && f.getLength() > LENGTH_MIN_BED_AWAKE_HIGH && f.getLength() < LENGTH_MAX_BED_AWAKE_HIGH ||
+                    f.getIntegral() > WEIGHT_MIN_BED_AWAKE_LOW && f.getIntegral() < WEIGHT_MAX_BED_AWAKE_LOW && f.getLength() > LENGTH_MIN_BED_AWAKE_LOW && f.getLength() < LENGTH_MAX_BED_AWAKE_LOW)
                 return true;
         }
         return false;
@@ -217,7 +217,7 @@ public class BedFallAE extends ActivityExtractor {
 
     private boolean userIsMovingInBed(List<Feature> features) {
         for(Feature f : features){
-            if(!(f.getWeight() >= WEIGHT_MIN_BED_MOVING && f.getWeight() <= WEIGHT_MAX_BED_MOVING && f.getLength() >= LENGTH_MIN_BED_MOVING && f.getLength() <= LENGTH_MAX_BED_MOVING))
+            if(!(f.getIntegral() >= WEIGHT_MIN_BED_MOVING && f.getIntegral() <= WEIGHT_MAX_BED_MOVING && f.getLength() >= LENGTH_MIN_BED_MOVING && f.getLength() <= LENGTH_MAX_BED_MOVING))
                 return false;
         }
         return true;

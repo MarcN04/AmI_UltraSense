@@ -28,6 +28,11 @@ public class GaussianFE extends FeatureExtractor{
 
     }
 
+    @Override
+    public Feature onPeakFeatureDetected(UnrefinedFeature uF) {
+        return null;
+    }
+
     private GaussianFeature fitGaussian(UnrefinedFeature uF){
 
         if(uF.getEndTime() -uF.getStartTime() <= 0)
@@ -68,7 +73,7 @@ public class GaussianFE extends FeatureExtractor{
 
         GaussianFeature gf = fitGaussian(uF);
         if(gf != null)
-            return new GaussianFeature(gf.getExtractorId(), gf.getTime(), gf.getLength(), gf.getWeight()*(-1));
+            return new GaussianFeature(gf.getExtractorId(), gf.getMax(), gf.getLength(), gf.getIntegral()*(-1));
         else
             return null;
 
