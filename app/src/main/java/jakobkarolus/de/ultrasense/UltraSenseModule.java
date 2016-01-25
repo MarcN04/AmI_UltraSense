@@ -23,15 +23,19 @@ import jakobkarolus.de.ultrasense.features.FeatureDetector;
 import jakobkarolus.de.ultrasense.features.FeatureProcessor;
 import jakobkarolus.de.ultrasense.features.GaussianFE;
 import jakobkarolus.de.ultrasense.features.MeanBasedFD;
+import jakobkarolus.de.ultrasense.features.MeanBasedKnockFD;
 import jakobkarolus.de.ultrasense.features.activities.ActivityFP;
 import jakobkarolus.de.ultrasense.features.activities.BedFallAE;
 import jakobkarolus.de.ultrasense.features.activities.InferredContextCallback;
 import jakobkarolus.de.ultrasense.features.activities.WorkdeskPresenceAE;
 import jakobkarolus.de.ultrasense.features.gestures.DownUpGE;
+import jakobkarolus.de.ultrasense.features.gestures.KnockGE;
 import jakobkarolus.de.ultrasense.features.gestures.GestureCallback;
 import jakobkarolus.de.ultrasense.features.gestures.GestureExtractor;
 import jakobkarolus.de.ultrasense.features.gestures.GestureFP;
 import jakobkarolus.de.ultrasense.features.gestures.SwipeGE;
+import jakobkarolus.de.ultrasense.features.gestures.PulseGE;
+import jakobkarolus.de.ultrasense.features.PeakFE;
 import jakobkarolus.de.ultrasense.view.SettingsFragment;
 
 /**
@@ -146,8 +150,8 @@ public class UltraSenseModule {
 
         gestureFP = new GestureFP(callback);
         List<GestureExtractor> gestureExtractors = new Vector<>();
-        gestureExtractors.add(new DownUpGE());
-        gestureExtractors.add(new SwipeGE());
+        gestureExtractors.add(new KnockGE());
+        gestureExtractors.add(new PulseGE());
 
         for (GestureExtractor ge : gestureExtractors) {
             if (!usePreCalibration)
@@ -157,15 +161,11 @@ public class UltraSenseModule {
 
         //silent S3: -55, 6 (hcw), 4,3
 
-        if(noisy)
-            featureDetector = new MeanBasedFD(gestureFP, SAMPLE_RATE, fftLength, hopSize, frequency, 3, -50.0, 3, 2, 1, AlgoHelper.getHannWindow(fftLength), true, 15);
-           // featureDetector = new MeanBasedFD(gestureFP(eigener), SAMPLE_RATE, fftLength, hopSize, frequency, AlgoHelper.getHannWindow(fftLength), true, 15);
-        else
-            featureDetector = new MeanBasedFD(gestureFP, SAMPLE_RATE, fftLength, hopSize, frequency, 4, -55.0, 3, 2, 0, AlgoHelper.getHannWindow(fftLength), false, 0.0);
+        featureDetector = new MeanBasedKnockFD(gestureFP, SAMPLE_RATE, fftLength, hopSize,AlgoHelper.getHannWindow(fftLength));
 
 
 
-        featureDetector.registerFeatureExtractor(new GaussianFE(0));
+        featureDetector.registerFeatureExtractor(new PeakFE(0));
         audioManager.setFeatureDetector(featureDetector);
         this.initialized = true;
     }

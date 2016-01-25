@@ -78,9 +78,9 @@ public class TestDataGestureFP extends GestureFP {
         for(int i=0; i < testFeatures.size(); i++){
             Feature f1 = testFeatures.get(i);
             Feature f2 = extractedFeatures.get(i);
-            meanDiff += Math.abs(f1.getTime()-f2.getTime());
+            meanDiff += Math.abs(f1.getMax()-f2.getMax());
             stdDiff += Math.abs(f1.getLength()-f2.getLength());
-            weightDiff += Math.abs(f1.getWeight()-f2.getWeight());
+            weightDiff += Math.abs(f1.getIntegral()-f2.getIntegral());
         }
 
         DecimalFormat df = new DecimalFormat("0.000000");

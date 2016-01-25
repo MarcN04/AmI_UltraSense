@@ -99,7 +99,7 @@ public class GestureFP extends FeatureProcessor {
         Collections.sort(getFeatures(), new Comparator<Feature>() {
             @Override
             public int compare(Feature lhs, Feature rhs) {
-                if (lhs.getTime() > rhs.getTime())
+                if (lhs.getMax() > rhs.getMax())
                     return 1;
                 else
                     return -1;
@@ -117,7 +117,7 @@ public class GestureFP extends FeatureProcessor {
             //-> we gotta ignore this, or it will lead to an unsuccessful calibration step irritating the user
             //TODO
             /*
-            if((feature.getTime() - currentFeatureTime) < CALIBRATION_TIME_THRESHOLD || !(Math.abs(currentFeatureTime - 0.0) < 1e-6)) {
+            if((feature.getMax() - currentFeatureTime) < CALIBRATION_TIME_THRESHOLD || !(Math.abs(currentFeatureTime - 0.0) < 1e-6)) {
                 features.clear();
                 return;
             }

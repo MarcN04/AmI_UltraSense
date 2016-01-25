@@ -59,7 +59,7 @@ public abstract class TwoFeatureGE implements GestureExtractor{
     }
 
     private boolean checkDistanceBetweenFeatures(Feature f1, Feature f2) {
-        double distance = f1.getTime() - f2.getTime();
+        double distance = f1.getMax() - f2.getMax();
         if(distance >= featureTimeDistanceMinThr && distance <= featureTimeDistanceMaxThr)
             return true;
         return false;
@@ -67,7 +67,7 @@ public abstract class TwoFeatureGE implements GestureExtractor{
 
     private boolean applyFeatureThresholds(Feature f, FeatureThresholds ft) {
         if(f.getLength() >= ft.getFeatureLengthMinThr() && f.getLength() <= ft.getFeatureLengthMaxThr()) {
-            if (f.getWeight() >= ft.getFeatureWeightMinThr() && f.getWeight() <= ft.getFeatureWeightMaxThr()) {
+            if (f.getIntegral() >= ft.getFeatureWeightMinThr() && f.getIntegral() <= ft.getFeatureWeightMaxThr()) {
                 return true;
             }
         }
@@ -94,7 +94,7 @@ public abstract class TwoFeatureGE implements GestureExtractor{
             Feature f2 = features.get(1);
             updateFeatureThresholds(featureOneThresholds, f1);
             updateFeatureThresholds(featureTwoThresholds, f2);
-            updateTimeDistance(f1.getTime(), f2.getTime());
+            updateTimeDistance(f1.getMax(), f2.getMax());
             features.clear();
             return CalibrationState.SUCCESSFUL;
 
@@ -122,11 +122,11 @@ public abstract class TwoFeatureGE implements GestureExtractor{
         if(f.getLength() >= ft.getFeatureLengthMaxThr())
             ft.setFeatureLengthMaxThr(f.getLength());
 
-        if(f.getWeight() <= ft.getFeatureWeightMinThr())
-            ft.setFeatureWeightMinThr(f.getWeight());
+        if(f.getIntegral() <= ft.getFeatureWeightMinThr())
+            ft.setFeatureWeightMinThr(f.getIntegral());
 
-        if(f.getWeight() >= ft.getFeatureWeightMaxThr())
-            ft.setFeatureWeightMaxThr(f.getWeight());
+        if(f.getIntegral() >= ft.getFeatureWeightMaxThr())
+            ft.setFeatureWeightMaxThr(f.getIntegral());
 
     }
 

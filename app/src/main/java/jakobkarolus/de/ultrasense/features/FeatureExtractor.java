@@ -23,6 +23,9 @@ public abstract class FeatureExtractor {
         this.id = id;
     }
 
+    /** added by Marc **/
+    public abstract Feature onPeakFeatureDetected(UnrefinedFeature uF);
+
     /**
      * notify method, which gets called when a positive doppler shift was detected
      * @param uF the UnrefinedFeature encapsulating the data

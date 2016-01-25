@@ -8,18 +8,23 @@ import java.util.List;
  * <br><br>
  * Created by Jakob on 02.07.2015.
  */
-public class KnockFE extends FeatureExtractor{
+public class PeakFE extends FeatureExtractor{
 
+    public PeakFE(int id) {
+        super(id);
+    }
 
+    @Override
+    public Feature onPeakFeatureDetected(UnrefinedFeature uF){
+        return fitPeak(uF);
+    }
     /**
      * creates a new GaussianFE with the given id.<br>
      * The id used to discern different FEs when passing their feature to the FeatureProcessor.
      *
      * @param id identifier for this specific FeatureExtractor
      */
-    public KnockFE(int id) {
-        super(id);
-    }
+
     //********** not needed any more only implemented because of root class FeatureExtractor
     @Override
     public Feature onHighFeatureDetected(UnrefinedFeature uF) {
@@ -32,7 +37,7 @@ public class KnockFE extends FeatureExtractor{
         return null;
     }
 
-    private KnockFeature fitKnock(UnrefinedFeature uF){
+    private PeakFeature fitPeak(UnrefinedFeature uF){
 
         if(uF.getEndTime() -uF.getStartTime() <= 0) {
             return null;
@@ -42,11 +47,29 @@ public class KnockFE extends FeatureExtractor{
         if(uF.getUnrefinedFeature().size() <= 1)
             return null;
 
-        double[] arrayOfSum = toArray(uF.getUnrefinedFeature());
+        List<Double> arrayOfSum = uF.getUnrefinedFeature();
+        double featureMax = 0;
+        double featureIntegral = 0;
 
-        //******* implement Octave-logic with Weka results
+        //******* TO BE IMPLEMENTED
 
-        return new KnockFeature(getId(), featureLength, featureMax, feautreIntegral);
+        /***
+         * Octave-Script
+         *
+         * for i = 1:m
+         *  vecA = [vecA sum(S(:,i))];
+         *
+         *  if (vecA(i) > -35000)
+         *      peakDuration = peakDuration + 1;
+         *      peakIntegral = peakIntegral + vecA(i);
+         *  end
+         * end
+         * peakMaximum = max(vecA);
+         * peakDuration = peakDuration * 1024 * 1/fs;
+         **/
+
+
+        return new PeakFeature(getId(), featureLength, featureMax, featureIntegral);
     }
 
 }

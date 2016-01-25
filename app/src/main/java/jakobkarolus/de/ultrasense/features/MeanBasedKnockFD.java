@@ -28,18 +28,10 @@ public class MeanBasedKnockFD extends FeatureDetector{
      * @param featureProcessor the FeatureProcessor associated with this FeatureDetector
      * @param sampleRate sampleRate of the signal
      * @param fftLength fft length to use
-     * @param hopSize hop size during fft processing
-     * @param carrierFrequency carrier frequency
-     * @param halfCarrierWidth single side magnitude extend (over lower and higher freq bins respectively) of the carrier frequency
-     * @param magnitudeThreshold magnitude threshold to use
-     * @param featHighThreshold threshold to overcome for starting a feature
-     * @param featLowThreshold threshold to overcome for continuing an already started feature
-     * @param featSlackWidth number of times the low thresholds is allowed to be bigger than the feature value to still continue the feature
+     * @param hopSize hop size during fft procession
      * @param win fft window to use
-     * @param ignoreNoise whether to ignoreNoise
-     * @param maxFeatureThreshold the maximum allowed feature value, only valid in conjunction with ignoreNoise==true
      */
-    public MeanBasedKnockFD(FeatureProcessor featureProcessor, double sampleRate, int fftLength, int hopSize, double carrierFrequency, int halfCarrierWidth, double magnitudeThreshold, double featHighThreshold, double featLowThreshold, int featSlackWidth, double[] win, boolean ignoreNoise, double maxFeatureThreshold) {
+    public MeanBasedKnockFD(FeatureProcessor featureProcessor, double sampleRate, int fftLength, int hopSize, double[] win) {
         super((double) hopSize / sampleRate, featureProcessor);
         this.fftLength = fftLength;
         this.hopSize = hopSize;
@@ -82,7 +74,7 @@ public class MeanBasedKnockFD extends FeatureDetector{
         }
 //
         double[] buffer = new double[fftLength];
-        List<Double> addedValues = new ArrayList<>();
+
         for(int i=0; i <= tempBuffer.length - fftLength; i+=hopSize){
             System.arraycopy(tempBuffer, i, buffer, 0, fftLength);
 
@@ -92,10 +84,8 @@ public class MeanBasedKnockFD extends FeatureDetector{
             for(int j=0; j <= values.length; i++){
                 valuesSum =+ values[0];
             }
-            addedValues.add(valuesSum);
+
             processFeatureValue(getCurrentHighFeature(), valuesSum);
-            //processFeatureValue(getCurrentLowFeature(), valueForTimeStep[1], false);
-            //außerhalb Schleife
         }
 
     }

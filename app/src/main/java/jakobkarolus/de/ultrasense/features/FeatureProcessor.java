@@ -61,7 +61,7 @@ public abstract class FeatureProcessor {
     public void processFeature(final Feature feature){
 
         //save the current feature time to clean up the stack if necessary
-        setCurrentFeatureTime(feature.getTime());
+        setCurrentFeatureTime(feature.getMax());
         saveFeatureToFile(feature);
 
         processFeatureOnSubclass(feature);
@@ -99,7 +99,7 @@ public abstract class FeatureProcessor {
                 @Override
                 public void run() {
                     try {
-                        featWriter.write(feature.getTime() + "," + feature.getLength() + "," + feature.getWeight() + "\n");
+                        featWriter.write(feature.getMax() + "," + feature.getLength() + "," + feature.getIntegral() + "\n");
                         featWriter.flush();
                     } catch (IOException e) {
                         //feature detection was already closed when this feature came in
@@ -139,7 +139,7 @@ public abstract class FeatureProcessor {
             int sizeBefore = getFeatures().size();
             while(iter.hasNext()){
                 Feature f = iter.next();
-                if((getCurrentFeatureTime() - f.getTime()) >= getTimeThresholdForGC()) {
+                if((getCurrentFeatureTime() - f.getMax()) >= getTimeThresholdForGC()) {
                     iter.remove();
                 }
             }
@@ -154,7 +154,7 @@ public abstract class FeatureProcessor {
     protected String printFeatureStack() {
         StringBuffer buffer = new StringBuffer();
         for(Feature f : getFeatures()){
-            if(f.getWeight() >= 0.0)
+            if(f.getIntegral() >= 0.0)
                 buffer.append("H");
             else
                 buffer.append("L");
@@ -168,7 +168,7 @@ public abstract class FeatureProcessor {
     protected void printFeaturesOnLog() {
         Log.d("FEATURE_STACK", "------------------------------------------");
         for(Feature feature : getFeatures())
-            Log.d("FEATURE", "" + df.format(feature.getTime()) + ";" + df.format(feature.getLength()) + ";" + df.format(feature.getWeight()));
+            Log.d("FEATURE", "" + df.format(feature.getMax()) + ";" + df.format(feature.getLength()) + ";" + df.format(feature.getIntegral()));
         Log.d("FEATURE_STACK_END", "--------------------------------------");
     }
 }
