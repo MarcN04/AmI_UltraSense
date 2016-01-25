@@ -5,8 +5,9 @@ Taskbreakdown:
 	- modify function processFeatureValue
 
 - create own notifyFeatureDetected-Method in FeatureDetected
-- create own/or modify UnrefinedFeature (not many changes)?? welches Part?
+- create own/or modify UnrefinedFeature (not many changes)
 
-- create own FeatureExtractor ?? 
+- create own FeatureExtractor 
 - create own Feature
--create own Gestures
+
+module,featuredetector, knockfe
