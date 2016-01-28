@@ -39,6 +39,7 @@ public abstract class FeatureDetector {
         this.timeIncreasePerStep = timeIncreasePerStep;
         this.currentHighFeature = new UnrefinedFeature(this.timeIncreasePerStep);
         this.currentLowFeature = new UnrefinedFeature(this.timeIncreasePerStep);
+        this.currentPeakFeature = new UnrefinedFeature(this.timeIncreasePerStep);
         this.featureProcessor = featureProcessor;
     }
 
@@ -108,6 +109,11 @@ public abstract class FeatureDetector {
     protected UnrefinedFeature getCurrentLowFeature() {
         return currentLowFeature;
     }
+
+    protected UnrefinedFeature getCurrentPeakFeature() {
+        return currentPeakFeature;
+    }
+
 
     protected double getTime() {
         return time;

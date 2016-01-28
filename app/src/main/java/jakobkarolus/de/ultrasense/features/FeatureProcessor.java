@@ -133,15 +133,13 @@ public abstract class FeatureProcessor {
      * cleans up the feature stack depending on the GC_threshold
      */
     protected void cleanUpFeatureStack() {
-
-        if(getFeatures().size() >= 5){
+        System.out.println("SIZE FEATURES:" + getFeatures().size());
+        if(getFeatures().size() > 0){
             ListIterator<Feature> iter = getFeatures().listIterator();
             int sizeBefore = getFeatures().size();
             while(iter.hasNext()){
                 Feature f = iter.next();
-                if((getCurrentFeatureTime() - f.getMax()) >= getTimeThresholdForGC()) {
                     iter.remove();
-                }
             }
             Log.d("FEATURE_GC", "Removed " + (sizeBefore - getFeatures().size()) + " features from the stack");
         }
@@ -153,12 +151,12 @@ public abstract class FeatureProcessor {
      */
     protected String printFeatureStack() {
         StringBuffer buffer = new StringBuffer();
-        for(Feature f : getFeatures()){
+       /* for(Feature f : getFeatures()){
             if(f.getIntegral() >= 0.0)
                 buffer.append("H");
             else
                 buffer.append("L");
-        }
+        }*/
         return buffer.toString();
     }
 
@@ -166,9 +164,9 @@ public abstract class FeatureProcessor {
      * prints detailed information of the feature stack to the logcat
      */
     protected void printFeaturesOnLog() {
-        Log.d("FEATURE_STACK", "------------------------------------------");
+    /*    Log.d("FEATURE_STACK", "------------------------------------------");
         for(Feature feature : getFeatures())
-            Log.d("FEATURE", "" + df.format(feature.getMax()) + ";" + df.format(feature.getLength()) + ";" + df.format(feature.getIntegral()));
-        Log.d("FEATURE_STACK_END", "--------------------------------------");
+            System.out.println("FEATURE" + "" + feature.getMax() + ";" + feature.getLength() + ";" + feature.getIntegral());
+        Log.d("FEATURE_STACK_END", "--------------------------------------");*/
     }
 }

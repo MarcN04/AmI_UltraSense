@@ -52,6 +52,11 @@ public class PulseGE implements GestureExtractor{
         ListIterator<Feature> iter = features.listIterator();
         while(iter.hasNext()){
             Feature f = iter.next();
+
+            if(f.getLength()<= 0.04644) {
+                if (f.getMax() <= -151692)
+                    gestures.add(getSpecificGesture());
+            }
             //octave-logic
             // getSpecificGesture() when is feature
         }

@@ -9,7 +9,12 @@ import java.util.List;
  * Created by Jakob on 02.07.2015.
  */
 public class PeakFE extends FeatureExtractor{
-
+    /**
+     * creates a new GaussianFE with the given id.<br>
+     * The id used to discern different FEs when passing their feature to the FeatureProcessor.
+     *
+     * @param id identifier for this specific FeatureExtractor
+     */
     public PeakFE(int id) {
         super(id);
     }
@@ -18,12 +23,7 @@ public class PeakFE extends FeatureExtractor{
     public Feature onPeakFeatureDetected(UnrefinedFeature uF){
         return fitPeak(uF);
     }
-    /**
-     * creates a new GaussianFE with the given id.<br>
-     * The id used to discern different FEs when passing their feature to the FeatureProcessor.
-     *
-     * @param id identifier for this specific FeatureExtractor
-     */
+
 
     //********** not needed any more only implemented because of root class FeatureExtractor
     @Override
@@ -42,16 +42,33 @@ public class PeakFE extends FeatureExtractor{
         if(uF.getEndTime() -uF.getStartTime() <= 0) {
             return null;
         }
-        double featureLength = uF.getEndTime() -uF.getStartTime();
+        //double featureLength = uF.getEndTime() -uF.getStartTime();
+
+
+        //System.out.println(featureLength);
 
         if(uF.getUnrefinedFeature().size() <= 1)
             return null;
 
         List<Double> arrayOfSum = uF.getUnrefinedFeature();
-        double featureMax = 0;
+
+        double featureLength = (double) arrayOfSum.size() * 1024 * 1/44100;
+        System.out.println("LENGTH" + featureLength);
+        double featureMax = arrayOfSum.get(0);
         double featureIntegral = 0;
 
+        for(int i=0; i < arrayOfSum.size(); i++) {
+
+            System.out.println("ARRAYVALUE" + arrayOfSum.get(i));
+            if(arrayOfSum.get(i)>featureMax)
+                featureMax = arrayOfSum.get(i);
+
+
+            featureIntegral += arrayOfSum.get(i);
+        }
+
         //******* TO BE IMPLEMENTED
+        System.out.println("length:" + featureLength + "max:" + featureMax + "integral:" + featureIntegral);
 
         /***
          * Octave-Script

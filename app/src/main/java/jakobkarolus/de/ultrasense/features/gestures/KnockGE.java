@@ -50,8 +50,19 @@ public class KnockGE implements GestureExtractor{
     public List<Gesture> detectGesture(List<Feature> features) {
         List<Gesture> gestures = new Vector<>();
         ListIterator<Feature> iter = features.listIterator();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             Feature f = iter.next();
+
+            //if(f.getLength()<= 0.04644){
+            if (f.getMax() > -151692){
+                gestures.add(getSpecificGesture());
+        }else{
+            if (f.getMax() <= -137719 && f.getMax() > -149296) {
+                gestures.add(getSpecificGesture());
+            }
+        }
+
+
             /*  TO BE IMPLEMENTED
             *
             *   Weka-Skript
